@@ -22,9 +22,8 @@ public interface UsuarioServicio extends UserDetailsService{
 
     void actualizarUsuario(Long id, Usuario usuarioActualizado);
 
-    public Usuario guardar(UsuarioRegistroDTO registroDTO);
 
-    public List<Usuario> listarUsuarios();
-    Usuario findByCedula(String cedula);
+    Usuario guardar(UsuarioRegistroDTO registroDTO);
 
+    List<Usuario> listarUsuarios();
 }

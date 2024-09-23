@@ -2,21 +2,17 @@ package com.loginingsoftware.loginapp.controlador.dto;
 
 public class UsuarioRegistroDTO {
 
-    private Long id;
     private String nombre;
     private String apellido;
     private String email;
     private String password;
-    private String cedula;
+    private Integer edad;
+    private String rol;  // Añadimos el rol
 
-    public Long getId() {
-        return id;
-    }
+    // Constructor vacío
+    public UsuarioRegistroDTO() {}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    // Getters y setters
     public String getNombre() {
         return nombre;
     }
@@ -48,25 +44,20 @@ public class UsuarioRegistroDTO {
     public void setPassword(String password) {
         this.password = password;
     }
-    public String getCedula() {
-        return cedula;
+
+    public Integer getEdad() {
+        return edad;
     }
 
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
+    public void setEdad(Integer edad) {
+        this.edad = edad;
     }
 
-    public UsuarioRegistroDTO(String nombre, String apellido, String email, String password,String cedula) {
-        super();
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.password = password;
-        this.cedula = cedula;
+    public String getRol() {
+        return rol;
     }
 
-    public UsuarioRegistroDTO() {
-
+    public void setRol(String rol) {
+        this.rol = rol;
     }
-
 }

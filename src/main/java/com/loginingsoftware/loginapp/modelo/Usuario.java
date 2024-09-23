@@ -1,22 +1,10 @@
 package com.loginingsoftware.loginapp.modelo;
 
-import java.util.Collection;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "usuarios", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "usuarios")
 public class Usuario {
 
     @Id
@@ -29,61 +17,32 @@ public class Usuario {
     @Column(name = "apellido")
     private String apellido;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
 
-    @Column(name = "cedula", unique = true)
-    private String cedula;
-
-    // Nuevos campos
     @Column(name = "edad")
     private Integer edad;
-
-    @Column(name = "altura")
-    private Double altura;
-
-    @Column(name = "peso")
-    private Double peso;
-
-    @Column(name = "descripcion")
-    private String descripcion;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "usuarios_roles",
-            joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id")
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id")
     )
-    private Collection<Rol> roles;
+    private Set<Rol> roles;
 
-    // Constructor sin parámetros
-    public Usuario() {
-    }
+    // Constructor vacío
+    public Usuario() {}
 
-    // Constructor con parámetros
-    public Usuario(String nombre, String apellido, String email, String password,String cedula, Collection<Rol> roles) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.password = password;
-        this.cedula = cedula;
-        this.roles = roles;
-    }
-
-    // Constructor con todos los campos
-    public Usuario(String nombre, String apellido, String email, String password, Integer edad, Double altura, Double peso, String descripcion, Collection<Rol> roles) {
+    public Usuario(String nombre, String apellido, String email, String password, Integer edad) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.password = password;
         this.edad = edad;
-        this.altura = altura;
-        this.peso = peso;
-        this.descripcion = descripcion;
-        this.roles = roles;
     }
 
     // Getters y Setters
@@ -135,42 +94,11 @@ public class Usuario {
         this.edad = edad;
     }
 
-    public Double getAltura() {
-        return altura;
-    }
-
-    public void setAltura(Double altura) {
-        this.altura = altura;
-    }
-
-    public Double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(Double peso) {
-        this.peso = peso;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getCedula() {
-        return cedula;
-    }
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
-    public Collection<Rol> getRoles() {
+    public Set<Rol> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Rol> roles) {
+    public void setRoles(Set<Rol> roles) {
         this.roles = roles;
     }
 }

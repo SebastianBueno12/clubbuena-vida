@@ -11,6 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
 
     public Usuario findByEmail(String email);
-    Usuario findByCedula(String cedula);
 
 }

@@ -1,76 +1,67 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <title>Restablecer Contraseña</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restablecer Contraseña - Club Buena Vida</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .toggle-password {
-            cursor: pointer;
+        body {
+            background-image: url('/images/fondo_piscina.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .navbar {
+            background-color: #004080;
+        }
+        .navbar a {
+            color: white;
+        }
+        .reset-section {
+            padding: 80px 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .reset-section h1 {
+            font-size: 2rem;
+            color: #004080;
+            text-align: center;
+        }
+        .reset-section .btn-primary {
+            background-color: #ffaa00;
+            border-color: #ffaa00;
         }
     </style>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#" th:href="@{/}">Loginapp</a>
-        </div>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="#">Club Buena Vida</a>
 </nav>
-<br>
-<br>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <h1>Restablecer Contraseña</h1>
-            <form th:action="@{/restablecerContrasena}" method="post">
-                <input type="hidden" name="token" th:value="${token}">
-                <div class="form-group">
-                    <label for="clave">Nueva Contraseña:</label>
-                    <div class="input-group">
-                        <input id="clave" name="clave" type="password" class="form-control" required placeholder="Digite su nueva contraseña">
-                        <span class="input-group-addon toggle-password">
-                            <i class="glyphicon glyphicon-eye-open"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="confirmarClave">Confirmar Contraseña:</label>
-                    <input id="confirmarClave" name="confirmarClave" type="password" class="form-control" required placeholder="Confirme su nueva contraseña">
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-6 col-md-offset-3">
-                            <input type="submit" class="form-control btn btn-primary" value="Restablecer Contraseña">
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div th:if="${mensaje}" class="alert alert-info" th:text="${mensaje}"></div>
-            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-        </div>
+<div class="container mt-5">
+    <div class="reset-section p-5 shadow-lg">
+        <h1>Restablecer Contraseña</h1>
+        <form th:action="@{/restablecerContrasena}" method="post">
+            <input type="hidden" name="token" th:value="${token}">
+            <div class="form-group">
+                <label for="clave">Nueva Contraseña:</label>
+                <input id="clave" name="clave" type="password" class="form-control" required placeholder="Digite su nueva contraseña">
+            </div>
+            <div class="form-group">
+                <label for="confirmarClave">Confirmar Contraseña:</label>
+                <input id="confirmarClave" name="confirmarClave" type="password" class="form-control" required placeholder="Confirme su nueva contraseña">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Restablecer Contraseña</button>
+        </form>
+
+        <div th:if="${mensaje}" class="alert alert-info mt-3" th:text="${mensaje}"></div>
+        <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.toggle-password').mousedown(function() {
-            $('#clave').attr('type', 'text');
-        }).mouseup(function() {
-            $('#clave').attr('type', 'password');
-        }).mouseout(function() {
-            $('#clave').attr('type', 'password');
-        });
-    });
-</script>
 </body>
 </html>

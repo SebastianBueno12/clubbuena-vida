@@ -1,19 +1,27 @@
 package com.loginingsoftware.loginapp.modelo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "rol")
+@Table(name = "roles")
 public class Rol {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "nombre")
     private String nombre;
+
+    // Relación muchos a muchos con la entidad Usuario
+    @ManyToMany(mappedBy = "roles")
+    private Set<Usuario> usuarios;
+
+    public Rol() {}
+
+    public Rol(String nombre) {
+        this.nombre = nombre;
+    }
 
     public Long getId() {
         return id;
@@ -31,20 +39,12 @@ public class Rol {
         this.nombre = nombre;
     }
 
-    public Rol(Long id, String nombre) {
-        super();
-        this.id = id;
-        this.nombre = nombre;
+    public Set<Usuario> getUsuarios() {
+        return usuarios;
     }
 
-    public Rol() {
-
+    public void setUsuarios(Set<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
-
-    public Rol(String nombre) {
-        super();
-        this.nombre = nombre;
-    }
-
-
 }
+
