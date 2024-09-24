@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Panel de Administración</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/images/fondo_piscina.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #004080;
+        }
+        .navbar a {
+            color: white;
+        }
+        .admin-panel {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 50px;
+        }
+        .admin-panel h2 {
+            color: #004080;
+        }
+        .admin-panel .btn-primary {
+            background-color: #ffaa00;
+            border-color: #ffaa00;
+        }
+    </style>
+</head>
+<body>
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="#">Club Buena Vida</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Cerrar sesión</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Panel de Administración -->
+<div class="container admin-panel">
+    <h2 class="text-center">Panel de Administración</h2>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <a href="/admin/usuarios" class="btn btn-primary btn-block">Gestionar Usuarios</a>
+        </div>
+        <div class="col-md-4">
+            <a href="/admin/reservas" class="btn btn-primary btn-block">Gestionar Reservas</a>
+        </div>
+        <div class="col-md-4">
+            <a href="/admin/inventario" class="btn btn-primary btn-block">Gestionar Inventario</a>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <a href="/admin/reportes" class="btn btn-primary btn-block">Ver Reportes</a>
+        </div>
+        <div class="col-md-4">
+            <a href="/admin/pagos" class="btn btn-primary btn-block">Gestionar Pagos</a>
+        </div>
+        <div class="col-md-4">
+            <a href="/admin/eventos" class="btn btn-primary btn-block">Gestionar Eventos</a>
+        </div>
+    </div>
+</div>
+
+<!-- Incluimos Bootstrap JS y sus dependencias -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
