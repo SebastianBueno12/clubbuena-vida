@@ -1,85 +1,124 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Panel de Administración</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión y Administración </title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-image: url('/images/fondo_piscina.jpg');
-            background-size: cover;
-            background-position: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         .navbar {
             background-color: #004080;
+            color: white;
         }
         .navbar a {
             color: white;
+            font-size: 18px;
         }
-        .admin-panel {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 50px;
+        .sidebar {
+            background-color: #004080;
+            height: 100vh;
+            position: fixed;
+            width: 200px;
         }
-        .admin-panel h2 {
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .sidebar a:hover {
+            background-color: #0056b3;
+        }
+        .sidebar i {
+            margin-right: 10px;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        .main-content h1 {
             color: #004080;
         }
-        .admin-panel .btn-primary {
+        .main-card {
+            transition: transform 0.3s;
+        }
+        .main-card:hover {
+            transform: scale(1.05);
+        }
+        .btn-custom {
             background-color: #ffaa00;
+            color: white;
             border-color: #ffaa00;
+        }
+        .btn-custom:hover {
+            background-color: #cc8800;
         }
     </style>
 </head>
 <body>
-<!-- Barra de navegación -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#">Club Buena Vida</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/logout">Cerrar sesión</a>
-            </li>
-        </ul>
+
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="#"> club La buena vida </a>
+    <div class="ml-auto">
+        <span class="navbar-text">BIENVENIDO</span>
+        <a class="nav-link d-inline" href="/logout">Cerrar Sesión</a>
     </div>
 </nav>
 
-<!-- Panel de Administración -->
-<div class="container admin-panel">
-    <h2 class="text-center">Panel de Administración</h2>
-    <div class="row mt-4">
+<div class="sidebar">
+    <a href="#"><i class="fas fa-users"></i> Usuarios</a>
+    <a href="#"><i class="fas fa-concierge-bell"></i> Recepción</a>
+    <a href="#"><i class="fas fa-cog"></i> Configuración</a>
+    <a href="#"><i class="fas fa-cash-register"></i> Punto de Venta</a>
+    <a href="#"><i class="fas fa-money-bill-wave"></i> Egresos</a>
+    <a href="#"><i class="fas fa-chart-bar"></i> Reportes</a>
+    <a href="#"><i class="fas fa-warehouse"></i> Activos</a>
+    <a href="#"><i class="fas fa-user-friends"></i> Clientes</a>
+</div>
+
+<div class="main-content">
+    <h1 class="text-center">Sistema de Gestión y Administración </h1>
+    <div class="row">
         <div class="col-md-4">
-            <a href="/admin/usuarios" class="btn btn-primary btn-block">Gestionar Usuarios</a>
+            <div class="card main-card">
+                <div class="card-body text-center">
+                    <img src="control_activos.png" alt="Control de Activos" class="img-fluid">
+                    <h5 class="card-title">Control de Activos</h5>
+                    <a href="#" class="btn btn-custom">Ver detalles</a>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
-            <a href="/admin/reservas" class="btn btn-primary btn-block">Gestionar Reservas</a>
+            <div class="card main-card">
+                <div class="card-body text-center">
+                    <img src="administracion_habitaciones.png" alt="Administración de Habitaciones" class="img-fluid">
+                    <h5 class="card-title">Administración de Habitaciones</h5>
+                    <a href="#" class="btn btn-custom">Ver detalles</a>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
-            <a href="/admin/inventario" class="btn btn-primary btn-block">Gestionar Inventario</a>
-        </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <a href="/admin/reportes" class="btn btn-primary btn-block">Ver Reportes</a>
-        </div>
-        <div class="col-md-4">
-            <a href="/admin/pagos" class="btn btn-primary btn-block">Gestionar Pagos</a>
-        </div>
-        <div class="col-md-4">
-            <a href="/admin/eventos" class="btn btn-primary btn-block">Gestionar Eventos</a>
+            <div class="card main-card">
+                <div class="card-body text-center">
+                    <img src="estados_economicos.png" alt="Estados Económicos" class="img-fluid">
+                    <h5 class="card-title">Estados Económicos</h5>
+                    <a href="#" class="btn btn-custom">Ver detalles</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Incluimos Bootstrap JS y sus dependencias -->
+<!-- Bootstrap and FontAwesome Scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+

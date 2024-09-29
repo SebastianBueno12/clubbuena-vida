@@ -21,9 +21,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             if (authority.getAuthority().equals("ROLE_ADMIN")) {
                 response.sendRedirect("/admin/panel");  // Redirigir al panel de admin
                 return;
+            } else if (authority.getAuthority().equals("ROLE_CLIENTE")) {
+                response.sendRedirect("/cliente/panel");  // Redirigir al panel de cliente (o la página que prefieras)
+                return;
             }
         }
-        // Redirigir a la página de inicio por defecto para otros roles
-        response.sendRedirect("/");
+
+        // Si el usuario tiene otro rol o no se encuentra en los anteriores
+        response.sendRedirect("/defaultPage");  // Redirigir a una página por defecto si no se encuentra el rol
     }
 }
