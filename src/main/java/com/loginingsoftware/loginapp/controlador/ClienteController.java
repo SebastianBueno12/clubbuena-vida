@@ -1,17 +1,26 @@
 package com.loginingsoftware.loginapp.controlador;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.loginingsoftware.loginapp.modelo.Habitacion;
+import com.loginingsoftware.loginapp.servicio.HabitacionServicio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
-@RequestMapping("/cliente")
 public class ClienteController {
 
-    @PreAuthorize("hasRole('ROLE_CLIENTE')")
-    @GetMapping("/panel")
-    public String mostrarPanelDeCliente() {
-        return "clientePanel";  // Nombre de la vista para el panel de clientes
+    @Autowired
+    private HabitacionServicio habitacionServicio;
+
+    @GetMapping("/cliente/panel")
+    public String mostrarHabitacionesDisponibles(Model model) {
+        List<Habitacion> habitaciones = habitacionServicio.obtenerHabitacionesDisponibles();
+        model.addAttribute("habitaciones", habitaciones);
+        return "clientePanel";  // Renderiza la vista del panel de cliente con las habitaciones
     }
+
 }
+

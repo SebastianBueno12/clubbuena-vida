@@ -3,24 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Club Buena Vida - Habitaciones Disponibles</title>
+    <title>Detalles de Habitación</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f0f0f0;
+            background-color: #f8f9fa;
         }
-        .navbar {
-            background-color: #004080;
-        }
-        .navbar a {
-            color: white;
+        .container {
+            margin-top: 50px;
         }
         .card-img-top {
-            height: 200px;
+            height: 300px;
             object-fit: cover;
-        }
-        .card {
-            margin: 10px;
         }
     </style>
 </head>
@@ -32,28 +26,26 @@
     </div>
 </nav>
 
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Habitaciones Disponibles</h1>
+<div class="container">
+    <h1 class="text-center mb-4">Detalles de la Habitación</h1>
     <div class="row">
-        <!-- Iterar sobre las habitaciones disponibles -->
-        <div class="col-md-4" th:each="habitacion : ${habitaciones}">
-            <div class="card mb-4 shadow-sm">
+        <div class="col-md-8">
+            <div class="card">
                 <img th:src="@{/images/${habitacion.imagen}}" class="card-img-top" alt="Imagen de la habitación">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${habitacion.nombre}">Nombre de la Habitación</h5>
                     <p class="card-text" th:text="${habitacion.descripcion}">Descripción de la habitación</p>
-                    <p class="card-text">
-                        Precio por noche: <strong th:text="${habitacion.precio}">0.0</strong>
-                    </p>
-                    <!-- Botón para ver detalles redirige a detallesHabitacion.html -->
-                    <a th:href="@{/habitacion/detalles/{id}(id=${habitacion.id})}" class="btn btn-primary btn-block">Ver detalles</a>
+                    <p><strong>Precio por noche:</strong> <span th:text="'$' + ${habitacion.precio}"></span></p>
+                    <p><strong>Disponibilidad:</strong> <span th:text="${habitacion.disponible ? 'Disponible' : 'No disponible'}"></span></p>
+                    <!-- Botón para reservar -->
+                    <a href="#" class="btn btn-success btn-block">Reservar ahora</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
