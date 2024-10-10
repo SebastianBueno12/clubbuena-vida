@@ -1,58 +1,119 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Club Buena Vida - Habitaciones Disponibles</title>
+    <title>Panel de Mesero - Club Buena Vida</title>
+    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
         }
         .navbar {
             background-color: #004080;
+            color: white;
         }
         .navbar a {
             color: white;
+            font-size: 18px;
         }
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
+        .sidebar {
+            background-color: #004080;
+            height: 100vh;
+            position: fixed;
+            width: 200px;
+        }
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .sidebar a:hover {
+            background-color: #0056b3;
+        }
+        .sidebar i {
+            margin-right: 10px;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        .main-content h1 {
+            color: #004080;
+            margin-bottom: 20px;
         }
         .card {
-            margin: 10px;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .btn-custom {
+            background-color: #ffaa00;
+            color: white;
+            border-color: #ffaa00;
+        }
+        .btn-custom:hover {
+            background-color: #cc8800;
         }
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#">Club Buena Vida</a>
+
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="#">Club La Buena Vida</a>
     <div class="ml-auto">
-        <a class="nav-link" href="/logout">Cerrar sesión</a>
+        <span class="navbar-text">BIENVENIDO MESERO</span>
+        <a class="nav-link d-inline" href="/logout">Cerrar Sesión</a>
     </div>
 </nav>
 
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Habitaciones Disponibles</h1>
+<div class="sidebar">
+    <a href="/mesero/dashboard"><i class="fas fa-tachometer-alt"></i> Panel de Mesero</a>
+    <a href="/mesero/pedidos"><i class="fas fa-list-alt"></i> Gestionar Pedidos</a>
+    <a href="/mesero/cuentas"><i class="fas fa-money-bill"></i> Ver Cuentas</a>
+    <a href="/mesero/mesas"><i class="fas fa-chair"></i> Ver Mesas Disponibles</a>
+</div>
+
+<div class="main-content">
+    <h1 class="text-center">Panel de Mesero</h1>
     <div class="row">
-        <!-- Iterar sobre las habitaciones disponibles -->
-        <div class="col-md-4" th:each="habitacion : ${habitaciones}">
-            <div class="card mb-4 shadow-sm">
-                <img th:src="@{/images/${habitacion.imagen}}" class="card-img-top" alt="Imagen de la habitación">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${habitacion.nombre}">Nombre de la Habitación</h5>
-                    <p class="card-text" th:text="${habitacion.descripcion}">Descripción de la habitación</p>
-                    <p class="card-text">
-                        Precio por noche: <strong th:text="${habitacion.precio}">0.0</strong>
-                    </p>
-                    <!-- Botón para ver detalles redirige a detallesHabitacion.html -->
-                    <a th:href="@{/habitacion/detalles/{id}(id=${habitacion.id})}" class="btn btn-primary btn-block">Ver detalles</a>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-list-alt fa-3x mb-3"></i>
+                    <h5 class="card-title">Gestionar Pedidos</h5>
+                    <a href="/mesero/pedidos" class="btn btn-custom">Ver detalles</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-money-bill fa-3x mb-3"></i>
+                    <h5 class="card-title">Ver Cuentas</h5>
+                    <a href="/mesero/cuentas" class="btn btn-custom">Ver detalles</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-chair fa-3x mb-3"></i>
+                    <h5 class="card-title">Ver Mesas Disponibles</h5>
+                    <a href="/mesero/mesas" class="btn btn-custom">Ver detalles</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Bootstrap and FontAwesome Scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

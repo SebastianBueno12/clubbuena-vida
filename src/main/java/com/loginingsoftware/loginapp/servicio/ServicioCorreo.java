@@ -1,12 +1,13 @@
 package com.loginingsoftware.loginapp.servicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailServicio {
+public class ServicioCorreo {
 
     @Autowired
     private JavaMailSender mailSender;
@@ -16,6 +17,8 @@ public class EmailServicio {
         mensaje.setTo(destinatario);
         mensaje.setSubject(asunto);
         mensaje.setText(cuerpo);
+
+        // Enviar el correo
         mailSender.send(mensaje);
     }
 }

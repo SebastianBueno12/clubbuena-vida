@@ -34,6 +34,10 @@ public class Usuario {
     )
     private Set<Rol> roles;
 
+    @Column(name = "token_restablecimiento")
+    private String tokenRestablecimiento;
+
+
     // Constructor vacío
     public Usuario() {}
 
@@ -100,5 +104,12 @@ public class Usuario {
 
     public void setRoles(Set<Rol> roles) {
         this.roles = roles;
+    }
+    public String getTokenRestablecimiento() {
+        return tokenRestablecimiento;
+    }
+
+    public void setTokenRestablecimiento(String tokenRestablecimiento) {
+        this.tokenRestablecimiento = tokenRestablecimiento;
     }
 }

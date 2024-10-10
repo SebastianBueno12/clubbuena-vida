@@ -47,6 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/registro**", "/recuperarContrasena**", "/restablecerContrasena**", "/js/**", "/css/**", "/img/**").permitAll() // Acceso libre
                 .antMatchers("/admin/**").hasRole("ADMIN")  // Solo los administradores pueden acceder a /admin/**
+                .antMatchers("/reserva/**").authenticated()
                 .anyRequest().authenticated()  // Cualquier otra ruta requiere autenticación
                 .and()
                 .formLogin()
@@ -61,7 +62,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
                 .permitAll();
+
     }
+
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth, UserDetailsService userDetailsService) throws Exception {

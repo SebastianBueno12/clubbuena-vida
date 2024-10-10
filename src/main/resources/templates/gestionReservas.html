@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Reservas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- Barra superior con el nombre del club y el botón de Cerrar Sesión -->
+<nav class="navbar navbar-expand-lg" style="background-color: #004080; color: white;">
+    <a class="navbar-brand text-white" href="/admin/panel">Club Buena Vida</a>
+    <div class="ml-auto">
+        <a class="nav-link d-inline text-white" href="/logout">Cerrar Sesión</a>
+    </div>
+</nav>
+<br>
+<div class="container">
+    <h1>Gestión de Reservas</h1>
+    <a href="/admin/reservas/nueva" class="btn btn-primary">Nueva Reserva</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Número Documento</th>
+            <th>Correo</th>
+            <th>Adultos</th>
+            <th>Niños</th>
+            <th>Días de Hospedaje</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reserva : ${reservas}">
+            <td th:text="${reserva.nombre}"></td>
+            <td th:text="${reserva.numeroDocumento}"></td>
+            <td th:text="${reserva.correo}"></td>
+            <td th:text="${reserva.adultos}"></td>
+            <td th:text="${reserva.ninos}"></td>
+            <td th:text="${reserva.diasHospedaje}"></td>
+            <td>
+                <a th:href="@{/admin/reservas/editar/{id}(id=${reserva.id})}" class="btn btn-warning">Editar</a>
+                <a th:href="@{/admin/reservas/eliminar/{id}(id=${reserva.id})}" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

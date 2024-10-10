@@ -1,12 +1,28 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestión y Administración </title>
+    <title>Panel de Administración - Club Buena Vida</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Función que obtiene el número de usuarios y actualiza el contador
+        function actualizarContadorUsuarios() {
+            $.ajax({
+                url: '/api/usuarios/contar',
+                method: 'GET',
+                success: function (data) {
+                    $('#contador-usuarios').text(data);  // Actualiza el elemento con id 'contador-usuarios'
+                }
+            });
+        }
+
+        // Llamar a la función cada 10 segundos para actualizar el contador automáticamente
+        setInterval(actualizarContadorUsuarios, 10000);  // 10000ms = 10 segundos
+    </script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -23,7 +39,7 @@
             background-color: #004080;
             height: 100vh;
             position: fixed;
-            width: 200px;
+            width: 220px;
         }
         .sidebar a {
             color: white;
@@ -35,90 +51,65 @@
         .sidebar a:hover {
             background-color: #0056b3;
         }
-        .sidebar i {
-            margin-right: 10px;
-        }
         .main-content {
-            margin-left: 220px;
+            margin-left: 240px;
             padding: 20px;
         }
         .main-content h1 {
             color: #004080;
         }
-        .main-card {
-            transition: transform 0.3s;
+        .card-stats {
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: transform 0.2s;
         }
-        .main-card:hover {
+        .card-stats:hover {
             transform: scale(1.05);
         }
-        .btn-custom {
-            background-color: #ffaa00;
-            color: white;
-            border-color: #ffaa00;
-        }
-        .btn-custom:hover {
-            background-color: #cc8800;
+        .bg-usuarios {
+            background-color: #007bff;
         }
     </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="#"> club La buena vida </a>
+    <a class="navbar-brand" href="#">Club Buena Vida</a>
     <div class="ml-auto">
-        <span class="navbar-text">BIENVENIDO</span>
+        <span class="navbar-text">BIENVENIDO ADMINISTRADOR</span>
         <a class="nav-link d-inline" href="/logout">Cerrar Sesión</a>
     </div>
 </nav>
 
 <div class="sidebar">
-    <a href="#"><i class="fas fa-users"></i> Usuarios</a>
-    <a href="#"><i class="fas fa-concierge-bell"></i> Recepción</a>
-    <a href="#"><i class="fas fa-cog"></i> Configuración</a>
-    <a href="#"><i class="fas fa-cash-register"></i> Punto de Venta</a>
-    <a href="#"><i class="fas fa-money-bill-wave"></i> Egresos</a>
+    <a href="/admin/usuarios"><i class="fas fa-users"></i> Gestión de Usuarios</a>
+    <a href="/admin/reservas"><i class="fas fa-calendar-check"></i> Reservas</a>
+    <a href="#"><i class="fas fa-bed"></i> Habitaciones / Cabañas</a>
+    <a href="#"><i class="fas fa-utensils"></i> Restaurante</a>
+    <a href="#"><i class="fas fa-cocktail"></i> Bar</a>
+    <a href="#"><i class="fas fa-boxes"></i> Inventario</a>
+    <a href="#"><i class="fas fa-swimmer"></i> Piscina y Pasadías</a>
     <a href="#"><i class="fas fa-chart-bar"></i> Reportes</a>
-    <a href="#"><i class="fas fa-warehouse"></i> Activos</a>
-    <a href="#"><i class="fas fa-user-friends"></i> Clientes</a>
 </div>
 
 <div class="main-content">
-    <h1 class="text-center">Sistema de Gestión y Administración </h1>
+    <h1 class="text-center">Dashboard de Administración</h1>
+    <br>
+
+
     <div class="row">
         <div class="col-md-4">
-            <div class="card main-card">
-                <div class="card-body text-center">
-                    <img src="control_activos.png" alt="Control de Activos" class="img-fluid">
-                    <h5 class="card-title">Control de Activos</h5>
-                    <a href="#" class="btn btn-custom">Ver detalles</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card main-card">
-                <div class="card-body text-center">
-                    <img src="administracion_habitaciones.png" alt="Administración de Habitaciones" class="img-fluid">
-                    <h5 class="card-title">Administración de Habitaciones</h5>
-                    <a href="#" class="btn btn-custom">Ver detalles</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card main-card">
-                <div class="card-body text-center">
-                    <img src="estados_economicos.png" alt="Estados Económicos" class="img-fluid">
-                    <h5 class="card-title">Estados Económicos</h5>
-                    <a href="#" class="btn btn-custom">Ver detalles</a>
-                </div>
+            <div class="card-stats bg-usuarios">
+                <h2>Usuarios Registrados</h2>
+                <p id="contador-usuarios" class="display-4" th:text="${totalUsuarios}">16</p> <!-- Aquí se mostrará el número de usuarios -->
             </div>
         </div>
     </div>
 </div>
 
 <!-- Bootstrap and FontAwesome Scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-

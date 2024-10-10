@@ -1,36 +1,51 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestionar Usuarios</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Gestión de Usuarios - Club Buena Vida</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
-    <h2 class="mt-4 text-center">Gestión de Usuarios</h2>
-    <table class="table table-bordered mt-4">
-        <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="usuario : ${usuarios}">
-            <td th:text="${usuario.nombre}"></td>
-            <td th:text="${usuario.email}"></td>
-            <td th:text="${#lists.arrayJoin(usuario.roles.toArray(), ', ')}"></td>
-            <td>
-                <a th:href="@{'/admin/actualizar/' + ${usuario.id}}" class="btn btn-primary">Editar</a>
-                <a th:href="@{'/admin/eliminar/' + ${usuario.id}}" class="btn btn-danger">Eliminar</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+
+<!-- Barra superior con el nombre del club y el botón de Cerrar Sesión -->
+<nav class="navbar navbar-expand-lg" style="background-color: #004080; color: white;">
+    <a class="navbar-brand text-white" href="/admin/panel">Club Buena Vida</a>
+    <div class="ml-auto">
+        <a class="nav-link d-inline text-white" href="/logout">Cerrar Sesión</a>
+    </div>
+</nav>
+
+<h1 class="text-center">Gestión de Usuarios</h1>
+<table class="table table-striped mt-4">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iteramos sobre la lista de usuarios -->
+    <tr th:each="usuario : ${usuarios}">
+        <td th:text="${usuario.id}"></td>
+        <td th:text="${usuario.nombre} + ' ' + ${usuario.apellido}"></td>
+        <td th:text="${usuario.email}"></td>
+        <td th:text="${#lists.isEmpty(usuario.roles) ? 'Sin rol' : usuario.roles.iterator().next().nombre}"></td>
+        <td>
+            <a th:href="@{/admin/usuarios/editar/{id}(id=${usuario.id})}" class="btn btn-primary">Editar</a>
+            <form th:action="@{/admin/usuarios/eliminar/{id}(id=${usuario.id})}" method="post" style="display:inline;">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/> <!-- Token CSRF -->
+                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de eliminar este usuario?')">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/admin/usuarios/nuevo" class="btn btn-success">Agregar Nuevo Usuario</a>
 </div>
+
 </body>
 </html>

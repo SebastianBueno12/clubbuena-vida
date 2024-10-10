@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Reserva</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- Barra superior con el nombre del club y el botón de Cerrar Sesión -->
+<nav class="navbar navbar-expand-lg" style="background-color: #004080; color: white;">
+    <a class="navbar-brand text-white" href="/admin/panel">Club Buena Vida</a>
+    <div class="ml-auto">
+        <a class="nav-link d-inline text-white" href="/logout">Cerrar Sesión</a>
+    </div>
+</nav>
+<div class="container">
+    <h1>Nueva Reserva</h1>
+    <form action="/admin/reservas/guardar" method="post">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="numeroDocumento">Número Documento</label>
+            <input type="text" id="numeroDocumento" name="numeroDocumento" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" name="correo" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="adultos">Número de Adultos</label>
+            <input type="number" id="adultos" name="adultos" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="ninos">Número de Niños</label>
+            <input type="number" id="ninos" name="ninos" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="diasHospedaje">Días de Hospedaje</label>
+            <input type="number" id="diasHospedaje" name="diasHospedaje" class="form-control" required>
+        </div>
+        <form action="/admin/reservas/guardar" method="post">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+            <!-- Otros campos del formulario -->
+            <button type="submit" class="btn btn-primary">Guardar Reserva</button>
+        </form>
+    </form>
+</div>
+</body>
+</html>
