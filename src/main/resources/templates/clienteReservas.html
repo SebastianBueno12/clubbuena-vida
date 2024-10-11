@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Reservas - Club Buena Vida</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg" style="background-color: #004080; color: white;">
+    <a class="navbar-brand text-white" href="/cliente/panel">Club Buena Vida</a>
+    <div class="ml-auto">
+        <a class="nav-link d-inline text-white" href="/logout">Cerrar Sesión</a>
+    </div>
+</nav>
+<br>
+<div class="container mt-5">
+    <h2>Mis Reservas</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID Reserva</th>
+            <th>Correo</th>
+            <th>Número de Documento</th>
+            <th>Días de Hospedaje</th>
+            <th>Pago Inicial (30%)</th>
+            <th>Pago Restante (70%)</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Aquí iteramos sobre las reservas del modelo -->
+        <tr th:each="reserva : ${reservas}">
+            <td th:text="${reserva.id}"></td>
+            <td th:text="${reserva.correo}"></td>
+            <td th:text="${reserva.numeroDocumento}"></td>
+            <td th:text="${reserva.diasHospedaje}"></td>
+            <td th:text="${reserva.pagoInicial}"></td>
+            <td th:text="${reserva.pagoRestante}"></td>
+            <td th:text="${reserva.estadoReserva}"></td>
+            <td>
+                <!-- Mostrar el botón solo si el estado es PENDIENTE_PAGO_INICIAL o PAGO_PARCIAL -->
+                <a th:href="@{'/cliente/reserva/pagar/' + ${reserva.id}}" class="btn btn-success"
+                   th:if="${#strings.equals(reserva.estadoReserva, 'PENDIENTE_PAGO_INICIAL')} or ${#strings.equals(reserva.estadoReserva, 'PAGO_PARCIAL')}">
+                    Pagar
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

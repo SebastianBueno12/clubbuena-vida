@@ -34,29 +34,31 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     public Optional<Usuario> findByEmail(String email) {
-        return Optional.empty();
+        return usuarioRepositorio.findByEmail(email);
     }
 
     @Override
     public void crearTokenDeRecuperacion(Usuario usuario, String token) {
-
+        usuario.setTokenRestablecimiento(token);
+        usuarioRepositorio.save(usuario);
     }
 
     @Override
     public Usuario findByTokenDeRecuperacion(String token) {
-        return null;
+        return usuarioRepositorio.findByTokenRestablecimiento(token)
+                .orElseThrow(() -> new IllegalArgumentException("Token no encontrado"));
     }
 
     @Override
     public void actualizarContrasena(Usuario usuario, String nuevaContrasena) {
-
+        usuario.setPassword(passwordEncoder.encode(nuevaContrasena));
+        usuarioRepositorio.save(usuario);
     }
-    // Nuevo método para contar el total de usuarios
+
     @Override
     public long contarUsuarios() {
         return usuarioRepositorio.count();
     }
-
 
     @Override
     public Usuario obtenerUsuarioPorId(Long id) {
@@ -66,12 +68,31 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     public void actualizarUsuario(Long id, Usuario usuarioActualizado) {
-
+        Usuario usuario = obtenerUsuarioPorId(id);
+        usuario.setNombre(usuarioActualizado.getNombre());
+        usuario.setApellido(usuarioActualizado.getApellido());
+        usuario.setEmail(usuarioActualizado.getEmail());
+        usuario.setPassword(passwordEncoder.encode(usuarioActualizado.getPassword()));
+        usuarioRepositorio.save(usuario);
     }
 
     @Override
+    @Transactional
     public Usuario guardar(UsuarioRegistroDTO registroDTO) {
-        return null;
+        Usuario usuario = new Usuario();
+        usuario.setNombre(registroDTO.getNombre());
+        usuario.setApellido(registroDTO.getApellido());
+        usuario.setEmail(registroDTO.getEmail());
+        usuario.setPassword(passwordEncoder.encode(registroDTO.getPassword()));
+
+        // Asignación del rol por defecto (puedes cambiar esto si necesitas otro rol)
+        Rol rol = rolRepositorio.findByNombre("ROLE_CLIENTE");
+        if (rol == null) {
+            throw new IllegalArgumentException("Rol no encontrado");
+        }
+        usuario.setRoles(new HashSet<>(Collections.singletonList(rol)));
+
+        return usuarioRepositorio.save(usuario); // Guardar el usuario en la base de datos
     }
 
     @Override
@@ -79,7 +100,6 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     public void guardarUsuarioConRol(Usuario usuario, String nombreRol) {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
-        // Obtener el rol de la base de datos
         Rol rol = rolRepositorio.findByNombre(nombreRol);
         if (rol == null) {
             throw new IllegalArgumentException("Rol no encontrado");
@@ -91,20 +111,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     public void actualizarUsuario(Long id, Usuario usuarioActualizado, String nombreRol) {
-        Usuario usuario = obtenerUsuarioPorId(id);
 
-        usuario.setNombre(usuarioActualizado.getNombre());
-        usuario.setApellido(usuarioActualizado.getApellido());
-        usuario.setEmail(usuarioActualizado.getEmail());
-
-        // Obtener y asignar el nuevo rol
-        Rol rol = rolRepositorio.findByNombre(nombreRol);
-        if (rol == null) {
-            throw new IllegalArgumentException("Rol no encontrado");
-        }
-        usuario.setRoles(new HashSet<>(Collections.singletonList(rol)));
-
-        usuarioRepositorio.save(usuario);
     }
 
     @Override
@@ -126,5 +133,4 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
         return new User(usuario.getEmail(), usuario.getPassword(), grantedAuthorities);
     }
-
 }

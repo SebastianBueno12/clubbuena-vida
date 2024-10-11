@@ -46,7 +46,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/registro**", "/recuperarContrasena**", "/restablecerContrasena**", "/js/**", "/css/**", "/img/**").permitAll() // Acceso libre
-                .antMatchers("/admin/**").hasRole("ADMIN")  // Solo los administradores pueden acceder a /admin/**
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/mesero/**").hasRole("MESERO")  // Solo los meseros acceden al panel mesero
+                .antMatchers("/cliente/**").hasRole("CLIENTE") // Solo los clientes acceden a su panel// Solo los administradores pueden acceder a /admin/**
                 .antMatchers("/reserva/**").authenticated()
                 .anyRequest().authenticated()  // Cualquier otra ruta requiere autenticación
                 .and()

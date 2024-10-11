@@ -1,5 +1,6 @@
 package com.loginingsoftware.loginapp.servicio;
 
+import com.loginingsoftware.loginapp.modelo.EstadoReserva;
 import com.loginingsoftware.loginapp.modelo.Reserva;
 import com.loginingsoftware.loginapp.repositorio.ReservaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,22 @@ public class ReservaServicio {
     public List<Reserva> listarReservas() {
         return reservaRepositorio.findAll();
     }
+    public List<Reserva> obtenerReservasPorCorreo(String correo) {
+        return reservaRepositorio.findByCorreo(correo);
+    }
 
-    // Guardar nueva reserva
     public Reserva guardarReserva(Reserva reserva) {
+        // Calcular el total del hospedaje según los días
+        double totalHospedaje = reserva.getDiasHospedaje() * reserva.getPrecioPorNoche(); // Precio por día (puedes cambiarlo)
+        reserva.setTotalHospedaje(totalHospedaje);
+
+        // Calcular el pago inicial (30%)
+        reserva.setPagoInicial(totalHospedaje * 0.30);
+        reserva.setPagoRestante(totalHospedaje * 0.70);
+
+        // Estado inicial
+        reserva.setEstadoReserva(EstadoReserva.PENDIENTE_PAGO_INICIAL);
+
         return reservaRepositorio.save(reserva);
     }
 
@@ -29,18 +43,23 @@ public class ReservaServicio {
                 .orElseThrow(() -> new IllegalArgumentException("Reserva no encontrada"));
     }
 
-    // Actualizar una reserva
     public void actualizarReserva(Long id, Reserva reservaActualizada) {
-        Reserva reserva = obtenerReservaPorId(id);  // Verificamos que la reserva exista
-        if (reserva != null) {
-            reserva.setNombre(reservaActualizada.getNombre());
-            reserva.setNumeroDocumento(reservaActualizada.getNumeroDocumento());
-            reserva.setCorreo(reservaActualizada.getCorreo());
-            reserva.setAdultos(reservaActualizada.getAdultos());
-            reserva.setNinos(reservaActualizada.getNinos());
-            reserva.setDiasHospedaje(reservaActualizada.getDiasHospedaje());
-            reservaRepositorio.save(reserva);  // Guardamos la reserva actualizada
-        }
+        Reserva reserva = obtenerReservaPorId(id);
+        reserva.setNombre(reservaActualizada.getNombre());
+        reserva.setNumeroDocumento(reservaActualizada.getNumeroDocumento());
+        reserva.setCorreo(reservaActualizada.getCorreo());
+        reserva.setAdultos(reservaActualizada.getAdultos());
+        reserva.setNinos(reservaActualizada.getNinos());
+        reserva.setDiasHospedaje(reservaActualizada.getDiasHospedaje());
+        reserva.setPrecioPorNoche(reservaActualizada.getPrecioPorNoche());
+
+        // Recalcular el total
+        double totalHospedaje = reservaActualizada.getDiasHospedaje() * reservaActualizada.getPrecioPorNoche();
+        reserva.setTotalHospedaje(totalHospedaje);
+        reserva.setPagoInicial(totalHospedaje * 0.30);
+        reserva.setPagoRestante(totalHospedaje * 0.70);
+
+        reservaRepositorio.save(reserva);
     }
 
     // Eliminar una reserva

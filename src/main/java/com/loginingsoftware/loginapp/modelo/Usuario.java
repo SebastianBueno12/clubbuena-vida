@@ -23,8 +23,6 @@ public class Usuario {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "edad")
-    private Integer edad;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -41,12 +39,12 @@ public class Usuario {
     // Constructor vacío
     public Usuario() {}
 
-    public Usuario(String nombre, String apellido, String email, String password, Integer edad) {
+    public Usuario(String nombre, String apellido, String email, String password ) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.password = password;
-        this.edad = edad;
+
     }
 
     // Getters y Setters
@@ -90,13 +88,6 @@ public class Usuario {
         this.password = password;
     }
 
-    public Integer getEdad() {
-        return edad;
-    }
-
-    public void setEdad(Integer edad) {
-        this.edad = edad;
-    }
 
     public Set<Rol> getRoles() {
         return roles;

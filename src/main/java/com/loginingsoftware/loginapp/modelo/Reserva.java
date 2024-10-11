@@ -16,6 +16,13 @@ public class Reserva {
     private int adultos;
     private int ninos;
     private int diasHospedaje;
+    private double precioPorNoche;
+    private double totalHospedaje;
+    private double pagoInicial;
+    private double pagoRestante;
+
+    @Enumerated(EnumType.STRING)
+    private EstadoReserva estadoReserva;
 
     // Getters y Setters
 
@@ -74,4 +81,45 @@ public class Reserva {
     public void setDiasHospedaje(int diasHospedaje) {
         this.diasHospedaje = diasHospedaje;
     }
+
+    public double getPrecioPorNoche() {
+        return precioPorNoche;
+    }
+
+    public void setPrecioPorNoche(double precioPorNoche) {
+        this.precioPorNoche = precioPorNoche;
+    }
+
+    public double getTotalHospedaje() {
+        return totalHospedaje;
+    }
+
+    public void setTotalHospedaje(double totalHospedaje) {
+        this.totalHospedaje = totalHospedaje;
+    }
+
+    public double getPagoInicial() {
+        return pagoInicial;
+    }
+
+    public void setPagoInicial(double pagoInicial) {
+        this.pagoInicial = pagoInicial;
+    }
+
+    public double getPagoRestante() {
+        return pagoRestante;
+    }
+
+    public void setPagoRestante(double pagoRestante) {
+        this.pagoRestante = pagoRestante;
+    }
+
+    public EstadoReserva getEstadoReserva() {
+        return estadoReserva;
+    }
+
+    public void setEstadoReserva(EstadoReserva estadoReserva) {
+        this.estadoReserva = estadoReserva;
+    }
 }
+

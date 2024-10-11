@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Cliente - Club Buena Vida</title>
+    <title>Panel de Mesero - Club Buena Vida</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
@@ -68,27 +68,27 @@
 <nav class="navbar navbar-expand-lg">
     <a class="navbar-brand" href="#">Club La Buena Vida</a>
     <div class="ml-auto">
-        <span class="navbar-text">BIENVENIDO CLIENTE</span>
+        <span class="navbar-text">BIENVENIDO MESERO</span>
         <a class="nav-link d-inline" href="/logout">Cerrar Sesión</a>
     </div>
 </nav>
 
 <div class="sidebar">
-    <a href="/cliente/panel"><i class="fas fa-tachometer-alt"></i> Panel de Cliente</a>
-    <a href="/cliente/reservas"><i class="fas fa-calendar-check"></i> Mis Reservas</a>
-    <a href="/cliente/pagos"><i class="fas fa-money-bill"></i> Mis Pagos</a>
-    <a href="/cliente/perfil"><i class="fas fa-user"></i> Mi Perfil</a>
+    <a href="/mesero/dashboard"><i class="fas fa-tachometer-alt"></i> Panel de Mesero</a>
+    <a href="/mesero/pedidos"><i class="fas fa-list-alt"></i> Gestionar Pedidos</a>
+    <a href="/mesero/cuentas"><i class="fas fa-money-bill"></i> Ver Cuentas</a>
+    <a href="/mesero/mesas"><i class="fas fa-chair"></i> Ver Mesas Disponibles</a>
 </div>
 
 <div class="main-content">
-    <h1 class="text-center">Panel de Cliente</h1>
+    <h1 class="text-center">Panel de Mesero</h1>
     <div class="row">
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <i class="fas fa-calendar-check fa-3x mb-3"></i>
-                    <h5 class="card-title">Mis Reservas</h5>
-                    <a href="/cliente/reservas" class="btn btn-custom">Ver detalles</a>
+                    <i class="fas fa-list-alt fa-3x mb-3"></i>
+                    <h5 class="card-title">Gestionar Pedidos</h5>
+                    <a href="/mesero/pedidos" class="btn btn-custom">Ver detalles</a>
                 </div>
             </div>
         </div>
@@ -96,17 +96,17 @@
             <div class="card shadow-sm">
                 <div class="card-body text-center">
                     <i class="fas fa-money-bill fa-3x mb-3"></i>
-                    <h5 class="card-title">Mis Pagos</h5>
-                    <a href="/cliente/pagos" class="btn btn-custom">Ver detalles</a>
+                    <h5 class="card-title">Ver Cuentas</h5>
+                    <a href="/mesero/cuentas" class="btn btn-custom">Ver detalles</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <i class="fas fa-user fa-3x mb-3"></i>
-                    <h5 class="card-title">Mi Perfil</h5>
-                    <a href="/cliente/perfil" class="btn btn-custom">Ver detalles</a>
+                    <i class="fas fa-chair fa-3x mb-3"></i>
+                    <h5 class="card-title">Ver Mesas Disponibles</h5>
+                    <a href="/mesero/mesas" class="btn btn-custom">Ver detalles</a>
                 </div>
             </div>
         </div>

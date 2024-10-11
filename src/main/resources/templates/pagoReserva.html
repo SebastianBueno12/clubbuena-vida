@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagar Reserva - Club Buena Vida</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg" style="background-color: #004080; color: white;">
+    <a class="navbar-brand text-white" href="/admin/panel">Club Buena Vida</a>
+    <div class="ml-auto">
+        <a class="nav-link d-inline text-white" href="/logout">Cerrar Sesión</a>
+    </div>
+</nav>
+<br>
+<div class="container mt-5">
+    <h2>Pagar Reserva</h2>
+    <form th:action="@{'/cliente/reserva/procesarPago/' + ${reserva.id}}" method="post">
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" th:value="${reserva.nombre}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="correo">Correo:</label>
+            <input type="email" class="form-control" id="correo" th:value="${reserva.correo}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="pago">Seleccione el monto a pagar:</label>
+            <select class="form-control" id="pago" name="pagoSeleccionado">
+                <option th:value="${reserva.pagoInicial}" th:text="'Pagar 30% (' + ${reserva.pagoInicial} + ')'"></option>
+                <option th:value="${reserva.pagoRestante}" th:text="'Pagar 70% (' + ${reserva.pagoRestante} + ')'"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Pagar</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
