@@ -1,11 +1,13 @@
 package com.loginingsoftware.loginapp.servicio;
 
 import com.loginingsoftware.loginapp.modelo.EstadoReserva;
+import com.loginingsoftware.loginapp.modelo.Habitacion;
 import com.loginingsoftware.loginapp.modelo.Reserva;
 import com.loginingsoftware.loginapp.repositorio.ReservaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -13,14 +15,19 @@ public class ReservaServicio {
 
     @Autowired
     private ReservaRepositorio reservaRepositorio;
+    @Autowired
+    private HabitacionServicio habitacionServicio;
 
     // Listar todas las reservas
     public List<Reserva> listarReservas() {
         return reservaRepositorio.findAll();
     }
+
     public List<Reserva> obtenerReservasPorCorreo(String correo) {
         return reservaRepositorio.findByCorreo(correo);
     }
+
+
 
     public Reserva guardarReserva(Reserva reserva) {
         // Calcular el total del hospedaje según los días
@@ -52,6 +59,10 @@ public class ReservaServicio {
         reserva.setNinos(reservaActualizada.getNinos());
         reserva.setDiasHospedaje(reservaActualizada.getDiasHospedaje());
         reserva.setPrecioPorNoche(reservaActualizada.getPrecioPorNoche());
+        // Verificar si se ha asignado una habitación y actualizarla
+        if (reservaActualizada.getHabitacion() != null) {
+            reserva.setHabitacion(reservaActualizada.getHabitacion());
+        }
 
         // Recalcular el total
         double totalHospedaje = reservaActualizada.getDiasHospedaje() * reservaActualizada.getPrecioPorNoche();
@@ -61,12 +72,27 @@ public class ReservaServicio {
 
         reservaRepositorio.save(reserva);
     }
-
-    // Eliminar una reserva
+    @Transactional
     public void eliminarReserva(Long id) {
-        Reserva reserva = obtenerReservaPorId(id);  // Verificamos que la reserva exista antes de eliminar
+        Reserva reserva = obtenerReservaPorId(id);
+
         if (reserva != null) {
+            // Si la reserva tiene una habitación asociada, primero desvincularla
+            if (reserva.getHabitacion() != null) {
+                Habitacion habitacion = reserva.getHabitacion();
+                habitacion.setReserva(null);
+                habitacion.setEstado("Disponible");
+                habitacionServicio.actualizarHabitacion(habitacion);
+            }
+
+            // Eliminar la reserva
             reservaRepositorio.deleteById(id);
         }
+    }
+
+
+
+    public List<Reserva> obtenerReservaPorCorreo(String correo) {
+        return reservaRepositorio.findByCorreo(correo);
     }
 }

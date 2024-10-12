@@ -1,6 +1,7 @@
 package com.loginingsoftware.loginapp.modelo;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "reservas")
@@ -23,8 +24,9 @@ public class Reserva {
 
     @Enumerated(EnumType.STRING)
     private EstadoReserva estadoReserva;
-
-    // Getters y Setters
+    // Relación con Habitacion
+    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Habitacion> habitaciones;
 
     public Long getId() {
         return id;
@@ -120,6 +122,17 @@ public class Reserva {
 
     public void setEstadoReserva(EstadoReserva estadoReserva) {
         this.estadoReserva = estadoReserva;
+    }
+    @ManyToOne
+    @JoinColumn(name = "habitacion_id")
+    private Habitacion habitacion;
+
+    public Habitacion getHabitacion() {
+        return habitacion;
+    }
+
+    public void setHabitacion(Habitacion habitacion) {
+        this.habitacion = habitacion;
     }
 }
 

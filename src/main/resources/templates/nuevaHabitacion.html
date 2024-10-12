@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Habitación</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg" style="background-color: #004080; color: white;">
+    <a class="navbar-brand text-white" href="/admin/panel">Club Buena Vida</a>
+    <div class="ml-auto">
+        <a class="nav-link d-inline text-white" href="/logout">Cerrar Sesión</a>
+    </div>
+</nav>
+<br>
+<div class="container mt-5">
+    <h2>Agregar Nueva Habitación</h2>
+    <form action="/admin/habitaciones/guardar" method="post">
+
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        <div class="form-group">
+            <label for="numero">Número de Habitación</label>
+            <input type="text" class="form-control" id="numero" name="numero" required>
+        </div>
+        <div class="form-group">
+            <label for="estado">Estado</label>
+            <select class="form-control" id="estado" name="estado" required>
+                <option value="DISPONIBLE">Disponible</option>
+                <option value="RESERVADA">Reservada</option>
+                <option value="MANTENIMIENTO">Mantenimiento</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="tipo">Tipo de Habitación</label>
+            <input type="text" class="form-control" id="tipo" name="tipo" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Habitación</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

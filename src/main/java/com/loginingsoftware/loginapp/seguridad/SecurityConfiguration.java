@@ -7,9 +7,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -45,16 +47,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/registro**", "/recuperarContrasena**", "/restablecerContrasena**", "/js/**", "/css/**", "/img/**").permitAll() // Acceso libre
+                .antMatchers("/registro**", "/recuperarContrasena**", "/restablecerContrasena**", "/js/**", "/css/**", "/img/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/mesero/**").hasRole("MESERO")  // Solo los meseros acceden al panel mesero
-                .antMatchers("/cliente/**").hasRole("CLIENTE") // Solo los clientes acceden a su panel// Solo los administradores pueden acceder a /admin/**
-                .antMatchers("/reserva/**").authenticated()
-                .anyRequest().authenticated()  // Cualquier otra ruta requiere autenticación
+                .antMatchers("/mesero/**").hasRole("MESERO")
+                .antMatchers("/cliente/**").hasRole("CLIENTE")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-
                 .successHandler(customAuthenticationSuccessHandler())
                 .permitAll()
                 .and()
@@ -63,9 +63,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
-                .permitAll();
-
+                .permitAll()
+                .and()
+                .csrf()
+                .ignoringAntMatchers("/admin/habitaciones/guardar", "/admin/habitaciones/nueva","/admin/habitaciones/asignar");  // Ignorar CSRF solo en estas rutas
     }
+
+
 
 
     @Autowired

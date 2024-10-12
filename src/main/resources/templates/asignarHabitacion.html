@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Asignar Habitación a Reserva</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg" style="background-color: #004080; color: white;">
+    <a class="navbar-brand text-white" href="/admin/panel">Club Buena Vida</a>
+    <div class="ml-auto">
+        <a class="nav-link d-inline text-white" href="/logout">Cerrar Sesión</a>
+    </div>
+</nav>
+<br>
+<div class="container mt-5">
+    <h2>Asignar Habitación: <span th:text="${habitacion.numero}"></span></h2>
+    <form action="/admin/habitaciones/asignar" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        <input type="hidden" name="habitacionId" th:value="${habitacion.id}" />
+
+        <div class="form-group">
+            <label for="reserva">Seleccione una Reserva</label>
+            <select class="form-control" id="reserva" name="reservaId" required>
+                <option th:each="reserva : ${reservas}" th:value="${reserva.id}" th:text="${reserva.nombre + ' - ' + reserva.numeroDocumento}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Asignar Habitación</button>
+    </form>
+</div>
+</body>
+</html>

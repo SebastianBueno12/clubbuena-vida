@@ -14,13 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class ClienteController {
 
     @Autowired
     private ReservaServicio reservaServicio;
+
 
     // Este método muestra el panel del cliente cuando accede con su rol
     @GetMapping("/cliente/panel")
@@ -29,7 +33,6 @@ public class ClienteController {
         return "clientePanel";  // Retorna la vista clientePanel.html
     }
 
-    // Método para mostrar las reservas del cliente autenticado
     @GetMapping("/cliente/reservas")
     public String verReservasDelCliente(Model model) {
         // Obtener el email del cliente autenticado
@@ -39,11 +42,15 @@ public class ClienteController {
         // Obtener las reservas asociadas a ese cliente
         List<Reserva> reservas = reservaServicio.obtenerReservasPorCorreo(emailCliente);
 
-        // Pasar las reservas al modelo para la vista
-        model.addAttribute("reservas", reservas);
+        // Verificar si se encontraron reservas
+        if (reservas != null && !reservas.isEmpty()) {
+            model.addAttribute("reservas", reservas);
+        } else {
+            model.addAttribute("mensaje", "No tienes reservas activas.");
+        }
+
         return "clienteReservas";  // Retorna la vista con las reservas del cliente
     }
-
     // Mostrar formulario de pago
     @GetMapping("/cliente/reserva/pagar/{id}")
     public String mostrarFormularioPago(@PathVariable Long id, Model model) {
@@ -76,5 +83,42 @@ public class ClienteController {
         // Redirigir a la vista de reservas con un mensaje de éxito
         model.addAttribute("mensaje", "Pago completado con éxito");
         return "redirect:/cliente/reservas";  // Redirigir a la vista de reservas
+    }
+
+    @GetMapping("/cliente/resumen")
+    public String verResumenCliente(Model model) {
+        // Obtener el email del cliente autenticado
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailCliente = ((UserDetails) authentication.getPrincipal()).getUsername();
+
+        // Obtener las reservas del cliente con habitación asignada y pago completado
+        List<Reserva> reservas = reservaServicio.obtenerReservasPorCorreo(emailCliente);
+
+        Reserva reserva = reservas.stream()
+                .filter(r -> r.getHabitacion() != null)  // Solo reservas con habitación asignada
+                .findFirst()
+                .orElse(null);
+
+        if (reserva != null) {
+            // Formateo de valores numéricos
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+            symbols.setDecimalSeparator('.');
+            symbols.setGroupingSeparator(',');
+            DecimalFormat df = new DecimalFormat("#,##0.00", symbols);
+
+            String precioPorNocheFormateado = df.format(reserva.getPrecioPorNoche());
+            String totalHospedajeFormateado = df.format(reserva.getTotalHospedaje());
+            String totalPagadoFormateado = df.format(reserva.getPagoInicial() + reserva.getPagoRestante());
+
+            model.addAttribute("reserva", reserva);
+            model.addAttribute("habitacion", reserva.getHabitacion());
+            model.addAttribute("precioPorNoche", precioPorNocheFormateado);
+            model.addAttribute("totalHospedaje", totalHospedajeFormateado);
+            model.addAttribute("totalPagado", totalPagadoFormateado);
+        } else {
+            model.addAttribute("mensaje", "No tienes ninguna reserva activa.");
+        }
+
+        return "clienteResumen";  // Retorna la vista con el resumen
     }
 }

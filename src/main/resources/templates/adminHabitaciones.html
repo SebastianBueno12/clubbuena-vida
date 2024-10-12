@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Habitaciones - Club Buena Vida</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg" style="background-color: #004080; color: white;">
+    <a class="navbar-brand text-white" href="/admin/panel">Club Buena Vida</a>
+    <div class="ml-auto">
+        <a class="nav-link d-inline text-white" href="/logout">Cerrar Sesión</a>
+    </div>
+</nav>
+<br>
+<div class="container mt-5">
+    <h2>Gestión de Habitaciones</h2>
+    <!-- Botón para agregar una nueva habitación -->
+    <a href="/admin/habitaciones/nueva" class="btn btn-primary mb-3">Agregar Nueva Habitación</a>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Número</th>
+            <th>Estado</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="habitacion : ${habitaciones}">
+            <td th:text="${habitacion.id}"></td>
+            <td th:text="${habitacion.numero}"></td>
+            <td th:text="${habitacion.estado}"></td>
+            <td th:text="${habitacion.tipo}"></td>
+            <td>
+                <a th:href="@{/admin/habitaciones/asignar/{id}(id=${habitacion.id})}" class="btn btn-primary">Asignar</a>
+                <form th:action="@{/admin/habitaciones/cambiarEstado/{id}(id=${habitacion.id})}" method="post" class="d-inline">
+                    <select name="estado">
+                        <option value="Disponible" th:selected="${habitacion.estado == 'Disponible'}">Disponible</option>
+                        <option value="Ocupada" th:selected="${habitacion.estado == 'Ocupada'}">Ocupada</option>
+                        <option value="Mantenimiento" th:selected="${habitacion.estado == 'Mantenimiento'}">Mantenimiento</option>
+                    </select>
+                    <button type="submit" class="btn btn-warning">Cambiar Estado</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/admin/panel" class="btn btn-primary mt-3">Volver al Panel</a>
+</div>
+</body>
+</html>
+
