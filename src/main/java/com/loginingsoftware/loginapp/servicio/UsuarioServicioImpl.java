@@ -110,8 +110,27 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     }
 
     @Override
+    @Transactional
     public void actualizarUsuario(Long id, Usuario usuarioActualizado, String nombreRol) {
+        Usuario usuarioExistente = obtenerUsuarioPorId(id);
 
+        // Actualizar los campos del usuario
+        usuarioExistente.setNombre(usuarioActualizado.getNombre());
+        usuarioExistente.setApellido(usuarioActualizado.getApellido());
+        usuarioExistente.setEmail(usuarioActualizado.getEmail());
+        // Buscar y asignar el nuevo rol
+        Rol nuevoRol = rolRepositorio.findByNombre(nombreRol);
+        if (nuevoRol == null) {
+            throw new IllegalArgumentException("Rol no encontrado: " + nombreRol);
+        }
+
+        // Actualizar roles (reemplazar roles actuales por el nuevo rol)
+        Set<Rol> roles = new HashSet<>();
+        roles.add(nuevoRol);
+        usuarioExistente.setRoles(roles);
+
+        // Guardar los cambios
+        usuarioRepositorio.save(usuarioExistente);
     }
 
     @Override

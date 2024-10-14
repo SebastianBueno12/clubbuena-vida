@@ -63,6 +63,7 @@ public class GestionUsuariosController {
         return "redirect:/admin/usuarios?actualizado";  // Redirigir después de actualizar
     }
 
+
     // Método para eliminar un usuario
     @PostMapping("/eliminar/{id}")
     public String eliminarUsuario(@PathVariable("id") Long id) {

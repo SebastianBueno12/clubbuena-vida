@@ -40,5 +40,4 @@ public class HabitacionServicio {
     public void actualizarHabitacion(Habitacion habitacion) {
         habitacionRepositorio.save(habitacion);
     }
-
 }
