@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario Principal</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            background-color: #004080;
+        }
+        .navbar-brand, .nav-link {
+            color: white;
+        }
+        .navbar-brand:hover, .nav-link:hover {
+            color: #ddd;
+        }
+        .container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            padding: 2rem;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            color: #555;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .btn-block {
+            font-size: 1.2rem;
+            padding: 0.75rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .btn-secondary:hover {
+            background-color: #6c757d;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/admin/panel">Club Buena Vida</a>
+    <div class="ml-auto">
+        <a class="nav-link" href="/logout">Cerrar Sesión</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <h2>Inventario</h2>
+        <p>Seleccione la sección del inventario que desea gestionar</p>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <a href="/admin/inventario/consumibles" class="btn btn-primary btn-block">Consumibles</a>
+            </div>
+            <div class="col-md-6 mb-3">
+                <a href="/admin/inventario/implementos" class="btn btn-secondary btn-block">Implementos de Habitaciones</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

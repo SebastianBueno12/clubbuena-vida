@@ -66,7 +66,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .csrf()
-                .ignoringAntMatchers("/admin/habitaciones/guardar", "/admin/habitaciones/nueva","/admin/habitaciones/asignar");  // Ignorar CSRF solo en estas rutas
+                .ignoringAntMatchers("/admin/habitaciones/guardar", "/admin/habitaciones/nueva","/admin/habitaciones/asignar",
+                                        "/admin/inventario/guardar","/admin/inventario/consumibles/nuevo","/admin/inventario/implementos/nuevo");  // Ignorar CSRF solo en estas rutas
     }
 
 
