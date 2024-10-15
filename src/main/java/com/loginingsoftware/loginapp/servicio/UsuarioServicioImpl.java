@@ -55,9 +55,8 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         usuarioRepositorio.save(usuario);
     }
 
-    @Override
     public long contarUsuarios() {
-        return usuarioRepositorio.count();
+        return usuarioRepositorio.count();  // Devuelve el número total de usuarios registrados
     }
 
     @Override

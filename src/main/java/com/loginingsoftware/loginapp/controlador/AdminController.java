@@ -20,7 +20,7 @@ public class AdminController {
     @GetMapping("/panel")
     public String mostrarPanelDeAdministracion() {
         return "adminPanel";  // Nombre de la vista para el panel de administración
-    }
+    }   
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin/usuarios")
     public String gestionarUsuarios(Model model) {

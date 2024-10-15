@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg" style="background-color: #004080; color: white;">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" href="/admin/panel">Club Buena Vida</a>
+        <div class="d-flex ms-auto">
+            <a class="nav-link text-white" href="/logout">Cerrar Sesión</a>
+        </div>
+    </div>
+</nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes de Ingresos</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center">Reportes de Ingresos</h2>
+
+    <!-- Tabla de Ingresos -->
+    <table class="table table-striped mt-4">
+        <thead>
+        <tr>
+            <th>Servicio</th>
+            <th>Ingresos Totales</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Reservas</td>
+            <td th:text="${ingresosReservas}"></td>
+        </tr>
+        <tr>
+            <td>Pasadías</td>
+            <td th:text="${ingresosPasadias}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Gráfica de Ingresos -->
+    <canvas id="ingresosChart" width="400" height="200" style="max-width: 100%;"></canvas>
+</div>
+
+<script>
+    // Inicialización de la gráfica
+    const ctx = document.getElementById('ingresosChart').getContext('2d');
+    const ingresosChart = new Chart(ctx, {
+        type: 'bar',  // Tipo de gráfica
+        data: {
+            labels: ['Reservas', 'Pasadías'],  // Etiquetas de los servicios
+            datasets: [{
+                label: 'Ingresos Totales en COP',
+                data: [parseFloat([[${ingresosReservas}]]), parseFloat([[${ingresosPasadias}]])],  // Datos
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)',  // Color para Reservas
+                    'rgba(255, 206, 86, 0.6)'   // Color para Pasadías
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true  // Inicia la gráfica desde 0
+                }
+            }
+        }
+    });
+</script>
+<a href="/admin/panel" class="btn btn-primary mt-3">Volver al Panel</a>
+</body>
+</html>

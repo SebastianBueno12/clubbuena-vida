@@ -95,4 +95,10 @@ public class ReservaServicio {
     public List<Reserva> obtenerReservaPorCorreo(String correo) {
         return reservaRepositorio.findByCorreo(correo);
     }
+    // Método para obtener el ingreso total por reservas completadas
+    public double obtenerIngresosTotalesReservas() {
+        List<Reserva> reservas = reservaRepositorio.findByEstadoReserva(EstadoReserva.PAGO_COMPLETADO);
+        return reservas.stream().mapToDouble(Reserva::getTotalHospedaje).sum();
+    }
 }
+
